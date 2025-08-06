@@ -1,117 +1,145 @@
 # Agentic Sales Intelligence Platform
 
-## Overview
-AI-powered sales intelligence platform for Concentrix Agentic offerings that helps sales teams identify opportunities, position solutions, and access relevant sales assets.
+A comprehensive React-based platform for managing Concentrix's Agentic AI sales enablement, combining PostgreSQL for structured data with Firebase for real-time collaboration and document storage.
 
 ## Features
+
 - **Content Management**: Manage services, use cases, case studies, and sales assets
 - **Client Intelligence**: AI-powered client analysis and opportunity scoring
-- **Sales Guide Generation**: Automated creation of personalized sales guides
-- **AgentiX OS™ Visualization**: Interactive framework visualization
-- **Real-time Collaboration**: Live editing and collaboration features
+- **Sales Guide Generation**: Automated, personalized sales materials
+- **AgentiX OS Framework**: Visual framework management
+- **Real-time Collaboration**: Live editing and presence indicators
+- **Vector Search**: Semantic similarity search using pgvector
+- **Analytics Dashboard**: Performance metrics and insights
 
-## Architecture
+## Tech Stack
 
-### Data Storage
-- **PostgreSQL (agentic_sales schema)**: Structured data, relationships, vector embeddings for semantic search
-- **Firebase Firestore**: Document storage, real-time collaboration, version history
-- **Cloud Storage**: Media files, large documents, attachments
+- **Frontend**: React 18, TypeScript, Tailwind CSS
+- **State Management**: Redux Toolkit, React Query
+- **Database**: PostgreSQL with pgvector extension
+- **Document Store**: Firebase Firestore
+- **Storage**: Firebase Cloud Storage
+- **Authentication**: Firebase Auth
+- **Real-time**: Firestore real-time listeners
+- **Charts**: Recharts
+- **Icons**: Lucide React
 
-### Key Technologies
-- **Frontend**: React 18, TypeScript, Redux Toolkit
-- **Backend**: PostgreSQL with pgvector extension
-- **Real-time**: Firebase Firestore & Realtime Database
-- **Search**: Vector embeddings for semantic search
-- **Auth**: Firebase Authentication
+## Prerequisites
 
-## Project Structure
-```
-src/
-├── components/     # Reusable UI components
-├── services/       # API and Firebase services
-├── hooks/          # Custom React hooks
-├── store/          # Redux store and slices
-├── types/          # TypeScript type definitions
-├── pages/          # Main application pages
-└── utils/          # Helper functions
-```
-
-## Getting Started
-
-### Prerequisites
-- Node.js 16+
+- Node.js 18+
 - PostgreSQL 14+ with pgvector extension
-- Firebase project with Firestore enabled
+- Firebase project configured
+- Git
 
-### Installation
+## Installation
+
+1. Clone the repository:
 ```bash
-# Clone the repository
 git clone https://github.com/DataandAI1/Agentic_Sales_Intelligence_Platform.git
+cd Agentic_Sales_Intelligence_Platform
+```
 
-# Install dependencies
+2. Install dependencies:
+```bash
 npm install
+```
 
-# Set up environment variables
+3. Set up environment variables:
+```bash
 cp .env.example .env
 # Edit .env with your configuration
+```
 
-# Run database migrations
+4. Set up PostgreSQL database:
+```bash
+# Install pgvector extension
+CREATE EXTENSION vector;
+
+# Run migrations
 npm run db:migrate
 
-# Start development server
+# Seed initial data
+npm run db:seed
+```
+
+5. Configure Firebase:
+```bash
+firebase init
+# Select Firestore, Storage, Hosting, Functions
+```
+
+## Development
+
+Start the development server:
+```bash
 npm start
 ```
 
-### Environment Variables
-```
-REACT_APP_POSTGRES_CONNECTION_STRING=postgresql://user:password@localhost:5432/agentic_sales
-REACT_APP_FIREBASE_API_KEY=your-api-key
-REACT_APP_FIREBASE_AUTH_DOMAIN=your-auth-domain
-REACT_APP_FIREBASE_PROJECT_ID=your-project-id
-REACT_APP_FIREBASE_STORAGE_BUCKET=your-storage-bucket
-REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your-sender-id
-REACT_APP_FIREBASE_APP_ID=your-app-id
-```
+The application will be available at http://localhost:3000
 
 ## Database Schema
-The PostgreSQL schema includes:
-- Services, Use Cases, Case Studies, Assets
-- Client Intelligence and scoring
-- User management and permissions
-- Workflow management (drafts, approvals)
-- Vector embeddings for semantic search
 
-See `/database/schema.sql` for complete schema.
+The application uses a hybrid architecture:
+- **PostgreSQL**: Structured data, relationships, vector embeddings
+- **Firestore**: Documents, real-time collaboration, media metadata
+- **Cloud Storage**: File storage, media assets
 
-## Firebase Collections
-- `content_versions`: Document versions and history
-- `collaboration_sessions`: Real-time collaboration
-- `media_library`: Media file metadata
-- `templates`: Content templates
-- `drafts_autosave`: Auto-saved drafts
+## Project Structure
+
+```
+src/
+├── components/       # Reusable UI components
+├── pages/           # Page components
+├── services/        # API and service layers
+│   ├── api/        # REST API calls
+│   ├── database/   # PostgreSQL client
+│   ├── firebase/   # Firebase services
+│   └── sync/       # Data synchronization
+├── store/          # Redux store and slices
+├── hooks/          # Custom React hooks
+├── contexts/       # React contexts
+├── types/          # TypeScript type definitions
+├── utils/          # Utility functions
+└── styles/         # CSS and styling
+```
+
+## Available Scripts
+
+- `npm start` - Start development server
+- `npm build` - Build for production
+- `npm test` - Run tests
+- `npm run db:migrate` - Run database migrations
+- `npm run db:seed` - Seed database with sample data
+- `npm run firebase:deploy` - Deploy to Firebase
 
 ## Deployment
 
-### Firebase Deployment
+1. Build the application:
 ```bash
 npm run build
-firebase deploy
 ```
 
-### Docker Deployment
+2. Deploy to Firebase:
 ```bash
-docker-compose up -d
+npm run firebase:deploy
 ```
+
+## CI/CD
+
+The project includes GitHub Actions workflow for automated deployment to Firebase on push to main branch.
 
 ## Contributing
+
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
 
 ## License
+
 Proprietary - Concentrix Corporation
 
 ## Support
-For issues or questions, contact the development team.
+
+For support, please contact the development team or create an issue in the repository.
