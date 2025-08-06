@@ -1,0 +1,47 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && request.auth.token.role == 'admin';
+    }
+    
+    function isEditor() {
+      return isAuthenticated() && 
+        (request.auth.token.role == 'admin' || request.auth.token.role == 'editor');
+    }
+    
+    // Content versions
+    match /content_versions/{document} {
+      allow read: if isAuthenticated() || resource.data.status == 'published';
+      allow write: if isEditor();
+    }
+    
+    // Collaboration sessions
+    match /collaboration_sessions/{session} {
+      allow read, write: if isAuthenticated();
+    }
+    
+    // Media library
+    match /media_library/{media} {
+      allow read: if isAuthenticated();
+      allow write: if isEditor();
+    }
+    
+    // Templates
+    match /templates/{template} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+    
+    // Auto-save drafts
+    match /drafts_autosave/{draft} {
+      allow read, write: if isAuthenticated() && 
+        request.auth.uid == resource.data.userId;
+    }
+  }
+}
