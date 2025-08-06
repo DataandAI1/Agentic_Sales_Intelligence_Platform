@@ -1,0 +1,30 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "content_versions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "contentId", "order": "ASCENDING" },
+        { "fieldPath": "version", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "collaboration_sessions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "contentId", "order": "ASCENDING" },
+        { "fieldPath": "activeUsers.lastActivity", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "drafts_autosave",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "userId", "order": "ASCENDING" },
+        { "fieldPath": "contentType", "order": "ASCENDING" },
+        { "fieldPath": "lastSaved", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
